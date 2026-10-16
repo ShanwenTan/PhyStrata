@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, cite this repository and the upstream research acknowledged in NOTICE."
+type: software
+title: "PhyStrata: Video-Level Motion Weighting and Dual-Tail Frame Credit"
+version: 0.1.0
+authors:
+  - name: "Shanwen_Tan"
+    email: "2304704525@qq.com"
+repository-code: "https://github.com/ShanwenTan/PhyStrata"
+license: Apache-2.0
+keywords:
+  - video generation
+  - diffusion models
+  - motion weighting
+  - physical commonsense

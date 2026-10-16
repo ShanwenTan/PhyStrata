@@ -1,0 +1,29 @@
+PhyStrata source distribution
+
+Portions of this software are Copyright (c) 2026 Applied Intuition, Inc.
+This source distribution incorporates software developed at Applied Intuition,
+Inc. (https://www.appliedintuition.com/) under the Apache License, Version 2.0.
+The underlying research by Bo Jiang, Depu Meng, Yihan Hu, Yichen Xie,
+Tianshuo Xu, and Wei Zhan is available as arXiv:2605.23878. The additional
+drift-weighting variant is described in this distribution's docs/method.md.
+
+Third-party software retained in this source distribution:
+
+1. finetrainers (finetrainers/): derived from
+   https://github.com/huggingface/finetrainers; Apache License, Version 2.0.
+   Original copyright headers are retained.
+2. VBench (eval/vbench/): vendored from
+   https://github.com/Vchitect/VBench; Apache License, Version 2.0.
+   Original copyright headers are retained.
+3. VideoPhy / VideoPhy-2 (eval/videophy/, eval/videophy2/): adapted from
+   https://github.com/hrishitbansal/videophy; MIT License.
+   Original copyright notices are retained.
+4. mPLUG-Owl (under eval/videophy/ and eval/videophy2/): derived from
+   https://github.com/X-PLUG/mPLUG-Owl (MIT License) and associated
+   Hugging Face Transformers code (Apache License, Version 2.0).
+   Original copyright notices are retained.
+5. Training utilities also build on WISA, VideoREPA, and Diffusers. Their
+   copyright headers and license notices remain in the corresponding files.
+
+The Apache-2.0 LICENSE in the repository root applies to the original and
+modified code except where a vendored component states a different license.
