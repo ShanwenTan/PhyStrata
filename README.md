@@ -19,19 +19,7 @@ This repository contains source code, reproducible 2B and 5B training recipes, i
 
 ## At a glance
 
-```mermaid
-flowchart LR
-    A[Real video] --> B[Frozen VAE latents]
-    B --> C[Temporal activity]
-    C --> D[Global-batch video rank]
-    C --> E[Per-video frame credit]
-    D --> F[Video weight W]
-    E --> G[Dual-tail interval weight U]
-    F --> H[Weighted drift loss]
-    G --> H
-    I[Predicted clean latents] --> H
-    H --> J[Existing denoiser training]
-```
+[![PhyStrata overview](assets/phystrata-overview.png)](assets/phystrata-overview.pdf)
 
 - **Video level:** midrank of each video's mean latent activity in the current distributed global batch.
 - **Frame level:** symmetric credit from adjacent motion intervals, followed by a dual-tail rank transform and a dispersion gate.
