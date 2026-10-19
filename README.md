@@ -30,13 +30,13 @@ The full derivation and edge cases are in [docs/method.md](docs/method.md).
 
 ## Generated examples
 
-Selected videos generated with PhyStrata. Click an animated preview to view the full video.
+Selected videos generated with PhyStrata. The animated previews loop automatically; click a preview to download the original MP4.
 
 | Water ripples | Pouring water | Breaking waves |
 |:---:|:---:|:---:|
-| [![Water ripples](assets/examples/example-01.webp)](assets/examples/example-01.mp4) | [![Pouring water](assets/examples/example-02.webp)](assets/examples/example-02.mp4) | [![Breaking waves](assets/examples/example-03.webp)](assets/examples/example-03.mp4) |
+| [![Water ripples](assets/examples/example-01.webp)](assets/examples/example-01.mp4?raw=true) | [![Pouring water](assets/examples/example-02.webp)](assets/examples/example-02.mp4?raw=true) | [![Breaking waves](assets/examples/example-03.webp)](assets/examples/example-03.mp4?raw=true) |
 | **Stirring soup** | **Boat at dock** | **Sailing** |
-| [![Stirring soup](assets/examples/example-04.webp)](assets/examples/example-04.mp4) | [![Boat at dock](assets/examples/example-05.webp)](assets/examples/example-05.mp4) | [![Sailing](assets/examples/example-06.webp)](assets/examples/example-06.mp4) |
+| [![Stirring soup](assets/examples/example-04.webp)](assets/examples/example-04.mp4?raw=true) | [![Boat at dock](assets/examples/example-05.webp)](assets/examples/example-05.mp4?raw=true) | [![Sailing](assets/examples/example-06.webp)](assets/examples/example-06.mp4?raw=true) |
 
 ## Installation
 
