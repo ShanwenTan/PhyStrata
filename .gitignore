@@ -168,3 +168,6 @@ outputs_test/
 *.avi
 *.gif
 *.webm
+
+# Curated generated examples displayed in the README
+!/assets/examples/*.mp4

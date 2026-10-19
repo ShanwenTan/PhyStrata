@@ -23,7 +23,7 @@ p_b^{\mathrm{vid}}=\frac{\#\{A<A_b\}+\tfrac12\#\{A=A_b\}}{N},\qquad
 W_b=1+\beta_v(2p_b^{\mathrm{vid}}-1),\quad \beta_v=0.4.
 $$
 
-This is the **global-batch reference** used by the released variant, not a fixed dataset-wide percentile. Its comparison pool is 32 for the reference 2B recipe and 64 for the reference 5B recipe. $W_b$ stays within $[0.6,1.4]$.
+This is the **global-batch reference** used by the released variant, not a fixed dataset-wide percentile. Its comparison pool is 32 for both the reference 2B and 5B recipes. $W_b$ stays within $[0.6,1.4]$.
 
 ## Symmetric frame credit
 

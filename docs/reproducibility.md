@@ -2,9 +2,9 @@
 
 ## What the source release reproduces
 
-The two public training configs carry the reference hyperparameters. Both use OpenVid64K, LoRA rank 128 and alpha 64, 49-frame 480×720 buckets, a per-device batch of four, a temporal drift offset of two, video and frame weighting strengths of 0.4, a frame gate scale of 0.07, and checkpoint saves every 500 optimizer steps. The 2B recipe uses eight GPUs for 2,000 configured steps; the 5B recipe uses sixteen GPUs for 1,000 configured steps. The video-level rank is recomputed from the *current* global distributed batch, including ties, at each step.
+The two public training configs carry the reference hyperparameters. Both use OpenVid64K, LoRA rank 128 and alpha 64, 49-frame 480×720 buckets, a per-device batch of four for 2B and two for 5B, a temporal drift offset of two, video and frame weighting strengths of 0.4, a frame gate scale of 0.07, and checkpoint saves every 500 optimizer steps. The 2B recipe uses eight GPUs for 2,000 configured steps; the 5B recipe uses sixteen GPUs for 2,000 configured steps. The video-level rank is recomputed from the *current* global distributed batch, including ties, at each step.
 
-The released source does not contain the original dataset, model weights, checkpoints, generated outputs, or private cluster launch configuration. Paths are supplied at runtime. Consequently, a new run can differ because of model checkpoint revision, video selection/cropping, GPU topology, stochastic data order, PyTorch/CUDA kernels, or evaluator revision.
+The released source does not contain the original dataset, model weights, checkpoints, full evaluation outputs, or private cluster launch configuration. Six selected generated examples are included under `assets/examples/`. Paths are supplied at runtime. Consequently, a new run can differ because of model checkpoint revision, video selection/cropping, GPU topology, stochastic data order, PyTorch/CUDA kernels, or evaluator revision.
 
 ## VideoPhy measurement
 
@@ -21,7 +21,7 @@ These values came from a single completed checkpoint and are preliminary. The pa
 
 1. Record the base model revision, dataset CSV hash, and local video-corpus version.
 2. Save `resolved_config.yaml`, the runtime dataset JSON, software versions, GPU model, global world size, and random seeds.
-3. Confirm `PHYSTRATA_DRIFT=1` and the correct global batch (32 for 2B, 64 for 5B).
+3. Confirm `PHYSTRATA_DRIFT=1` and the correct global batch (32 for both 2B and 5B).
 4. Record checkpoint step and hashes of `pytorch_lora_weights.safetensors` and `predictor.safetensors`.
 5. Use the same VideoPhy prompt CSV, scorer checkpoint, and generation settings; confirm 344 distinct nonempty videos and 688 score rows before quoting overall SA/PC.
 

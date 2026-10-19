@@ -15,8 +15,8 @@ eval_checkpoint_path: null
 result_path: null
 logging_dir: null
 training_type: lora
-train_steps: 1000
-batch_size: 4
+train_steps: 2000
+batch_size: 2
 lr: 5.0e-05
 lr_warmup_steps: 200
 checkpointing_steps: 500

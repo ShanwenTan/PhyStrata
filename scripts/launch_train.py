@@ -83,8 +83,12 @@ def main(argv: list[str] | None = None) -> int:
     })
     if cfg["variant"] != "phystrata" or cfg["model_type"] != "phystrata":
         raise RuntimeError("Training config has an unexpected model type")
-    if cfg["batch_size"] != 4 or cfg["checkpointing_steps"] != 500:
-        raise RuntimeError("Reference recipe must keep batch size 4 and checkpoint interval 500")
+    expected_batch_size = 4 if args.size == "2b" else 2
+    if cfg["batch_size"] != expected_batch_size or cfg["checkpointing_steps"] != 500:
+        raise RuntimeError(
+            f"Reference {args.size} recipe must keep batch size {expected_batch_size} "
+            "and checkpoint interval 500"
+        )
     runtime_config = output / "resolved_config.yaml"
     write_runtime_file(runtime_config, yaml.safe_dump(cfg, sort_keys=False), args.node_rank)
 

@@ -13,9 +13,9 @@
 
 PhyStrata redistributes a video diffusion model's **drift supervision** across videos and temporal intervals. It gives relatively active videos more weight within the current global training batch, then assigns symmetric credit to low- and high-activity latent positions within each video. The denoising objective, predictor training objective, model architecture, and inference guidance are unchanged by this weighting rule.
 
-This repository contains source code, reproducible 2B and 5B training recipes, inference, and VideoPhy evaluation. It includes small benchmark metadata; **pretrained models, adapters, training video corpora, generated videos, and evaluator weights are not included.**
+This repository contains source code, reproducible 2B and 5B training recipes, inference, VideoPhy evaluation, and six selected generated examples. It includes small benchmark metadata; **pretrained models, adapters, training video corpora, and evaluator weights are not included.**
 
-> **Research status.** This is an exploratory method and code release. The result below is one measured 5B checkpoint on the included 344-prompt VideoPhy split; it is not a claim of acceptance at a conference or a multi-seed comparison.
+> **Research status.** This is an exploratory method and code release.
 
 ## At a glance
 
@@ -27,6 +27,16 @@ This repository contains source code, reproducible 2B and 5B training recipes, i
 - **Lightweight:** no new network, teacher model, optical-flow estimator, or additional VAE forward pass.
 
 The full derivation and edge cases are in [docs/method.md](docs/method.md).
+
+## Generated examples
+
+Selected videos generated with PhyStrata. Click an animated preview to view the full video.
+
+| Water ripples | Pouring water | Breaking waves |
+|:---:|:---:|:---:|
+| [![Water ripples](assets/examples/example-01.webp)](assets/examples/example-01.mp4) | [![Pouring water](assets/examples/example-02.webp)](assets/examples/example-02.mp4) | [![Breaking waves](assets/examples/example-03.webp)](assets/examples/example-03.mp4) |
+| **Stirring soup** | **Boat at dock** | **Sailing** |
+| [![Stirring soup](assets/examples/example-04.webp)](assets/examples/example-04.mp4) | [![Boat at dock](assets/examples/example-05.webp)](assets/examples/example-05.mp4) | [![Sailing](assets/examples/example-06.webp)](assets/examples/example-06.mp4) |
 
 ## Installation
 
@@ -84,14 +94,14 @@ python scripts/launch_train.py --size 2b \
   --wandb-project YOUR_WANDB_PROJECT
 ```
 
-For the **5B reference recipe**, launch the same command on two 8-GPU nodes using a shared filesystem. On node 0 use `--node-rank 0`; on node 1 use `--node-rank 1`. Both commands need `--size 5b --nnodes 2 --nproc-per-node 8 --master-addr NODE_0_IP --master-port 29500`, the same paths, and the same output directory. Authenticate with `wandb login` before enabling online tracking; no token belongs in the repository.
+For the **5B reference recipe**, launch the same command on two 8-GPU nodes using a shared filesystem. On node 0 use `--node-rank 0`; on node 1 use `--node-rank 1`. Both commands need `--size 5b --nnodes 2 --nproc-per-node 8 --master-addr NODE_0_IP --master-port 29500`, the same paths, and the same output directory. The per-device batch is two, giving a global batch of 32. Authenticate with `wandb login` before enabling online tracking; no token belongs in the repository.
 
 | Recipe | GPUs | Per-GPU batch | Global batch | Steps | Checkpoint interval | LoRA rank / alpha |
 |---|---:|---:|---:|---:|---:|---:|
 | 2B + OpenVid64K | 8 | 4 | 32 | 2,000 | 500 | 128 / 64 |
-| 5B + OpenVid64K | 16 | 4 | 64 | 1,000 configured | 500 | 128 / 64 |
+| 5B + OpenVid64K | 16 | 2 | 32 | 2,000 | 500 | 128 / 64 |
 
-The global-batch video rank uses all distributed ranks at each step. Thus its comparison pool has 32 videos in the 2B recipe and 64 in the 5B recipe. This is a deliberate batch-reference variant; it does not compute a fixed rank over the entire dataset.
+The global-batch video rank uses all distributed ranks at each step. Its comparison pool has 32 videos in both the 2B and 5B recipes. This is a deliberate batch-reference variant; it does not compute a fixed rank over the entire dataset.
 
 ## Inference
 
@@ -127,14 +137,6 @@ bash eval/scripts/run_videophy_eval.sh
 
 The evaluator writes generation metadata, per-prompt scores, and `result_summary.txt`. VideoPhy **SA** measures semantic adherence and **PC** measures physical commonsense. Use a fresh result directory for each checkpoint. Additional VideoPhy2 and VBench entrypoints remain under `eval/scripts/`; their separate evaluator weights are also external.
 
-### Measured reference run
-
-| Checkpoint | Prompts | SA ↑ | PC ↑ | Setup |
-|---|---:|---:|---:|---|
-| 5B, step 500 | 344 | **65.41%** | **38.66%** | 8 GPUs, 2 workers/GPU, seed 42, 49 frames, 50 steps |
-
-These are the final values from the completed single-run `result_summary.txt`; all 344 videos and 688 task scores were present. The adapter and generated videos are not part of this source package. See [docs/reproducibility.md](docs/reproducibility.md) for the precise scope of the result.
-
 ## Repository map
 
 | Path | Purpose |
@@ -145,20 +147,6 @@ These are the final values from the completed single-run `result_summary.txt`; a
 | `tests/generate_phystrata.py` | Text-to-video inference |
 | `eval/scripts/` | VideoPhy, VideoPhy2, and VBench evaluation |
 | `docs/` | Method, setup, and reproduction notes |
-
-## Publish this package on GitHub
-
-Unzip the release package, install Git and GitHub CLI, and sign in once with `gh auth login`. From the extracted `PhyStrata` directory, create and push a public repository with one command:
-
-```powershell
-pwsh -File scripts/publish_to_github.ps1 -Repository YOUR_ACCOUNT/PhyStrata
-```
-
-On Linux/macOS use `bash scripts/publish_to_github.sh YOUR_ACCOUNT/PhyStrata`. Both scripts run the release check before committing and pushing. They publish source files only; GitHub authentication and your repository name are supplied locally.
-
-## Responsible use and provenance
-
-This is research software. Latent activity is a weighting signal, not a physical-law detector; camera movement, appearance changes, or flicker can increase it. Check dataset rights and model licenses before distribution. The repository retains relevant upstream and third-party attributions in [NOTICE](NOTICE) and the corresponding license headers. No credentials, datasets, checkpoints, or generated videos are committed.
 
 ## Citation
 

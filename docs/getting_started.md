@@ -17,7 +17,7 @@ Obtain these independently under their original licenses:
 3. A PhyStrata LoRA adapter and `predictor.safetensors` for inference or evaluation.
 4. The VideoCon physics scorer for VideoPhy evaluation.
 
-No base model, generated video, dataset shard, adapter, or scorer is bundled. The training launcher checks the supplied model directory, CSV, and video root before starting distributed workers. A dataset row can use `caption` and `video_path` columns, with a relative video filename under the supplied video root.
+Six selected generated examples are included under `assets/examples/`. No base model, dataset shard, adapter, or scorer is bundled. The training launcher checks the supplied model directory, CSV, and video root before starting distributed workers. A dataset row can use `caption` and `video_path` columns, with a relative video filename under the supplied video root.
 
 ## 3. Inspect and run the training recipe
 
@@ -31,9 +31,9 @@ python scripts/launch_train.py --size 2b \
   --output-dir /runs/phystrata-2b --dry-run
 ```
 
-Remove `--dry-run` to start 8 local workers. Add `--wandb-project PROJECT` for online logging. The recipe sets the drift-weighting flag and writes checkpoints every 500 steps. It uses a per-device batch of four.
+Remove `--dry-run` to start 8 local workers. Add `--wandb-project PROJECT` for online logging. The recipe sets the drift-weighting flag and writes checkpoints every 500 steps. It uses a per-device batch of four for 2B and two for 5B.
 
-For 5B, use two 8-GPU nodes with the same shared absolute paths. Run one launcher per node with `--size 5b --nnodes 2 --nproc-per-node 8 --master-addr NODE_0_IP`; set node ranks to 0 and 1 respectively. Set `--master-port` to a free port accessible between nodes. A full run needs enough GPU memory for CogVideoX-5B training and a shared output filesystem.
+For 5B, use two 8-GPU nodes with the same shared absolute paths. Run one launcher per node with `--size 5b --nnodes 2 --nproc-per-node 8 --master-addr NODE_0_IP`; set node ranks to 0 and 1 respectively. The per-device batch is two, giving a global batch of 32, and the recipe runs for 2,000 steps. Set `--master-port` to a free port accessible between nodes. A full run needs enough GPU memory for CogVideoX-5B training and a shared output filesystem.
 
 ## 4. Inference from a checkpoint
 

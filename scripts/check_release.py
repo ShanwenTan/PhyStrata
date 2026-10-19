@@ -7,6 +7,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 FORBIDDEN_SUFFIXES = {".mp4", ".mov", ".avi", ".gif", ".safetensors", ".ckpt", ".pt", ".pth", ".bin"}
+PUBLIC_EXAMPLE_VIDEOS = {f"assets/examples/example-{index:02d}.mp4" for index in range(1, 7)}
 SOURCE_SUFFIXES = {".py", ".sh", ".ps1", ".yaml", ".yml", ".json", ".md", ".toml", ".txt", ".cff"}
 OLD_LABELS = ("la" + "mo", "vm" + "fc")
 BRANDING = re.compile("(?i)(?:" + "|".join(
@@ -20,7 +21,7 @@ def main() -> int:
     files = [path for path in ROOT.rglob("*") if path.is_file() and ".git" not in path.parts]
     for path in files:
         rel = path.relative_to(ROOT).as_posix()
-        if path.suffix.lower() in FORBIDDEN_SUFFIXES:
+        if path.suffix.lower() in FORBIDDEN_SUFFIXES and rel not in PUBLIC_EXAMPLE_VIDEOS:
             errors.append(f"large/media artifact: {rel}")
         if path.stat().st_size > 5_000_000:
             errors.append(f"file exceeds 5 MB source budget: {rel}")
@@ -46,7 +47,7 @@ def main() -> int:
     if errors:
         print("Release check failed:\n" + "\n".join(f"- {error}" for error in errors))
         return 1
-    print(f"Release check passed: {len(files)} source files; no weights, videos, private paths, or obsolete labels")
+    print(f"Release check passed: {len(files)} files; only approved example videos; no weights, private paths, or obsolete labels")
     return 0
 
 

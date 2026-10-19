@@ -8,4 +8,4 @@ Initial research source release with:
 - Method, environment, provenance, and reproducibility documentation.
 - Source checks and CPU regression tests for weights, ties, fallback behavior, and checkpoint namespace compatibility.
 
-The archive contains no training video corpus, base model, LoRA adapter, predictor checkpoint, evaluator weights, or generated MP4. The single 5B step-500 VideoPhy measurement is documented as a preliminary reference result.
+The archive contains no training video corpus, base model, LoRA adapter, predictor checkpoint, or evaluator weights. Six selected generated examples are available under `assets/examples/`. The single 5B step-500 VideoPhy measurement is documented as a preliminary reference result.
